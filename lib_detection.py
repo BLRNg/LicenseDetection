@@ -141,11 +141,8 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
     # one_line = (470, 110)
     # two_lines = (280, 200)
 
-    one_line = (950, 700)
+    one_line = (470, 110)
     two_lines = (950, 700)
-
-    # one_line = (280, 200)
-    # two_lines = (280, 200)
 
     Probs = Yr[..., 0]
     Affines = Yr[..., 2:]
@@ -224,14 +221,12 @@ def detect_lp(model, I, max_dim, lp_threshold):
 
     # Chuyển thành Tensor
     T = T.reshape((1, T.shape[0], T.shape[1], T.shape[2]))
-    print(model)
+
     # Tiến hành detect biển số bằng Wpod-net pretrain
     Yr = model.predict(T)
 
     # Remove các chiều =1 của Yr
     Yr = np.squeeze(Yr)
-
-    print(Yr.shape)
 
     # Tái tạo và trả về các biến gồm: Nhãn, Ảnh biến số, Loại biển số (1: dài: 2 vuông)
     L, TLp, lp_type = reconstruct(I, Iresized, Yr, lp_threshold)
